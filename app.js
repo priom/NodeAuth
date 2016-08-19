@@ -8,7 +8,6 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bodyParser = require('body-parser');
-var multer = require('multer');
 var flash = require('connect-flash');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
@@ -23,10 +22,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// handle file upload
-// app.use(multer({ dest: './uploads' }));
-var upload = multer({ dest: './uploads' });
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -39,10 +34,6 @@ app.use(session({
   saveUninitialized: true,
   resave: true
 }));
-
-// passport
-app.use(passport.initialize());
-app.use(passport.session());
 
 // validator
 app.use(expressValidator({
@@ -65,13 +56,16 @@ app.use(expressValidator({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // connect-flash msg
 app.use(flash());
 app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);
   next();
 });
-
 
 app.use('/', routes);
 app.use('/users', users);
