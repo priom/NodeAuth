@@ -11,6 +11,8 @@ var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/nodeauth');
+
 var db = mongoose.connection;
 
 var routes = require('./routes/index');

@@ -2,7 +2,6 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 // connect to mongo
-mongoose.connect('mongodb://localhost/nodeauth');
 var db = mongoose.connection;
 
 // User schema
@@ -37,7 +36,7 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
 
 // query for login
 module.exports.getUserById = function(id, callback) {
-    // var query = {username: username};
+    // var query = { username: username };
     User.findById(query, callback);
 }
 module.exports.getUserByUsername = function(username, callback) {

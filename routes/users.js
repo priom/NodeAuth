@@ -110,7 +110,21 @@ passport.deserializeUser(function(id, done) {
 
 // user login authentication
 passport.use(new LocalStrategy(
-    function(username, password, done){
+    function (username, password, done) {
+        User.getUserByUsername(username, function (err, user) {
+            if(err) throw err;
+
+            if(!user){
+                console.log('Unknown User!');
+                return done(null, false, { message: 'Unknown User' });
+            }
+        });
+    }
+));
+
+
+passport.use (new LocalStrategy (
+    function(username, password, done) {
         User.getUserByUsername(username, function(err, user) {
             if(err) throw err;
 
